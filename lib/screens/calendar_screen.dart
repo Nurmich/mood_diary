@@ -33,14 +33,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
             Navigator.of(context).pop();
           },
         ),
-        title: Center(
-          child: Text(
-            _selectedDay != null && _selectedDay!.isSameDay(DateTime.now())
-                ? "Сегодня"
-                : DateFormat('d MMMM', 'ru').format(_selectedDay!),
-            style: TextStyle(color: Colors.grey),
-          ),
-        ),
         actions: [
           TextButton(
             onPressed: () {
