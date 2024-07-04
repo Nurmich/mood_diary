@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'models/mood_entry.dart';
 import 'providers/mood_provider.dart';
 import 'screens/calendar_screen.dart';
 import 'screens/mood_diary_screen.dart';
@@ -13,8 +16,11 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox('moodBox');
   await initializeDateFormatting('ru', null);
-
+  // final moodBox = Hive.box('moodBox');
+  // await moodBox.clear();
   runApp(MoodDiaryApp());
+
+  // await generateEntriesForPast29Days();
 }
 
 class MoodDiaryApp extends StatelessWidget {
@@ -150,3 +156,126 @@ class MoodDiaryApp extends StatelessWidget {
     );
   }
 }
+
+// Future<void> generateEntriesForPast29Days() async {
+//   final moodBox = Hive.box('moodBox');
+//   final random = Random();
+//   final now = DateTime.now();
+
+//   for (int i = 0; i < 29; i++) {
+//     final date = now.subtract(Duration(days: i));
+//     final mood = _getRandomMood();
+//     final moodChoices = _getMoodChoices(mood);
+//     final stressLevel = (random.nextDouble() * 10).round().toDouble();
+//     final selfAssessment = (random.nextDouble() * 10).round().toDouble();
+//     final note = 'Запись по дате: ${DateFormat('d MMMM', 'ru').format(date)}';
+
+//     final entry = MoodEntry(
+//       date: date,
+//       mood: mood,
+//       moodChoices: moodChoices,
+//       stressLevel: stressLevel,
+//       selfAssessment: selfAssessment,
+//       note: note,
+//     );
+
+//     moodBox.add(entry.toJson());
+//   }
+// }
+
+// String _getRandomMood() {
+//   const moods = [
+//     'Радость',
+//     'Страх',
+//     'Бешенство',
+//     'Грусть',
+//     'Спокойствие',
+//     'Сила',
+//   ];
+//   return moods[Random().nextInt(moods.length)];
+// }
+
+// List<String> _getMoodChoices(String mood) {
+//   switch (mood) {
+//     case 'Радость':
+//       return [
+//         'Счастье',
+//         'Восторг',
+//         'Веселье',
+//         'Радость',
+//         'Эйфория',
+//         'Вдохновение',
+//         'Благодарность',
+//         'Наслаждение',
+//         'Восхищение',
+//         'Удовольствие'
+//       ];
+//     case 'Страх':
+//       return [
+//         'Тревога',
+//         'Ужас',
+//         'Паника',
+//         'Беспокойство',
+//         'Страх',
+//         'Опасение',
+//         'Испуг',
+//         'Нервозность',
+//         'Неуверенность',
+//         'Тревожность'
+//       ];
+//     case 'Бешенство':
+//       return [
+//         'Гнев',
+//         'Раздражение',
+//         'Ярость',
+//         'Злость',
+//         'Возмущение',
+//         'Негодование',
+//         'Злоба',
+//         'Фрустрация',
+//         'Огорчение',
+//         'Недовольство'
+//       ];
+//     case 'Грусть':
+//       return [
+//         'Печаль',
+//         'Уныние',
+//         'Тоска',
+//         'Скорбь',
+//         'Депрессия',
+//         'Грусть',
+//         'Разочарование',
+//         'Огорчение',
+//         'Печальное настроение',
+//         'Удрученность'
+//       ];
+//     case 'Спокойствие':
+//       return [
+//         'Расслабление',
+//         'Удовлетворение',
+//         'Комфорт',
+//         'Умиротворение',
+//         'Покой',
+//         'Безмятежность',
+//         'Спокойствие',
+//         'Баланс',
+//         'Стабильность',
+//         'Миролюбие'
+//       ];
+//     case 'Сила':
+//       return [
+//         'Уверенность',
+//         'Энергичность',
+//         'Вдохновение',
+//         'Мотивация',
+//         'Энтузиазм',
+//         'Детерминация',
+//         'Сила воли',
+//         'Решимость',
+//         'Дерзость',
+//         'Самоутверждение'
+//       ];
+//     default:
+//       return [];
+//   }
+// }
